@@ -32,16 +32,27 @@
     function translate() {
         document.querySelectorAll("text, .goog-menuitem-content").forEach(e => {
             let key = e.innerHTML;
+            // Caution: if the string literal in next line apprears to be empty, it isn't.
+            // it contains the 202b unicode character: https://unicode-explorer.com/c/202B
+            // TODO: find a way to use HTML entity or some other visual representation of
+            // this character such that it is not ignored by JS in processing.
             if (key[0] === "‫") {
                 key = key.substring(1);
             }
+            // Caution: if the string literal in next line apprears to be empty, it isn't.
+            // it contains the 202c unicode character: https://unicode-explorer.com/c/202C
+            // TODO: find a way to use HTML entity or some other visual representation of
+            // this character such that it is not ignored by JS in processing.
             if (key[key.length - 1] === "‬") {
                 key = key.substring(0, key.length - 1);
             }
+            // Caution: if the string literals in next lines apprear empty, they arn't.
+            // it contains the 202b and 202c unicode characters:
+            // https://unicode-explorer.com/c/202B & https://unicode-explorer.com/c/202C
+            // TODO: find a way to use HTML entity or some other visual representation of
+            // these characters such that they are not ignored by JS in processing.
             if (dictionary.has(key)) {
                 e.innerHTML = "‫" + dictionary.get(key) + "‬";
-            } else {
-                console.log('"' + key + '"');
             }
         });
     }
